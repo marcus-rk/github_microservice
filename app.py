@@ -29,7 +29,7 @@ def get_headers():
     }
 
 @app.route('/')
-@swag_from('swagger/home.yml')
+@swag_from('swagger/docs/home.yml')
 def home():
     return jsonify({
         "service": "GitHub Microservice",
@@ -45,7 +45,7 @@ def home():
 
 @app.route('/github/stats', methods=['GET'])
 @jwt_required()
-@swag_from('swagger/stats.yml')
+@swag_from('swagger/docs/stats.yml')
 def get_github_stats():
     try:
         # Get the current user from the JWT token
