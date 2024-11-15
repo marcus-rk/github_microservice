@@ -4,6 +4,8 @@ import os
 from datetime import datetime, timedelta
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from dotenv import load_dotenv
+from flasgger import swag_from
+from swagger.config import init_swagger
 
 # Load environment variables from .env file
 load_dotenv()
@@ -18,6 +20,8 @@ jwt = JWTManager(app)
 GITHUB_API_URL = "https://api.github.com"
 GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
 
+swagger = init_swagger(app)
+
 def get_headers():
     return {
         "Authorization": f"token {GITHUB_TOKEN}",
@@ -25,6 +29,7 @@ def get_headers():
     }
 
 @app.route('/')
+@swag_from('swagger/home.yml')
 def home():
     return jsonify({
         "service": "GitHub Microservice",
@@ -40,6 +45,7 @@ def home():
 
 @app.route('/github/stats', methods=['GET'])
 @jwt_required()
+@swag_from('swagger/stats.yml')
 def get_github_stats():
     try:
         # Get the current user from the JWT token

@@ -1,0 +1,25 @@
+Home endpoint
+---
+tags:
+  - General
+responses:
+  200:
+    description: Service information
+    schema:
+      type: object
+      properties:
+        service:
+          type: string
+        available_endpoints:
+          type: array
+          items:
+            type: object
+            properties:
+              path:
+                type: string
+              method:
+                type: string
+              description:
+                type: string
+              authentication:
+                type: string

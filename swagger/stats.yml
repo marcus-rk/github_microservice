@@ -1,0 +1,54 @@
+Get GitHub Repository Statistics
+---
+tags:
+  - GitHub
+security:
+  - JWT: []
+description: Retrieves statistics for the configured GitHub repository including stars, forks, and recent commits
+parameters:
+  - in: header
+    name: Authorization
+    type: string
+    required: true
+    description: JWT token (format - Bearer <token>)
+responses:
+  200:
+    description: Repository statistics successfully retrieved
+    schema:
+      type: object
+      properties:
+        repository:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Repository name
+            stars:
+              type: integer
+              description: Number of repository stars
+            forks:
+              type: integer
+              description: Number of repository forks
+            open_issues:
+              type: integer
+              description: Number of open issues
+        recent_commits:
+          type: integer
+          description: Number of commits in the last 30 days
+        requested_by:
+          type: string
+          description: Username from JWT token
+  401:
+    description: Unauthorized - Invalid or missing JWT token
+    schema:
+      type: object
+      properties:
+        msg:
+          type: string
+  500:
+    description: Internal server error
+    schema:
+      type: object
+      properties:
+        error:
+          type: string
